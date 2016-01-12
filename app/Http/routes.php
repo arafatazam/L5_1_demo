@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('categories', 'CategoryController');
+Route::resource('categories', 'CategoryController',['except'=>['show'] ]);
 
 Route::get('test',function(){
     return view('category.index');
