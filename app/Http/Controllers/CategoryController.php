@@ -37,9 +37,10 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,\App\Category $categoryModel)
     {
-        //
+        $categoryModel->create($request->all());
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -82,8 +83,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,\App\Category $categoryModel)
     {
-        //
+        $category = $categoryModel->findOrFail($id);
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 }
