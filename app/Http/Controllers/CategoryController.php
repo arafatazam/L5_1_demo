@@ -17,7 +17,6 @@ class CategoryController extends Controller
     public function index(\App\Category $categoryModel)
     {
         $categories = $categoryModel->all()->load('parent')->toArray();
-        //dd($categories);
         return view('category.index',compact('categories'));
     }
 
@@ -26,9 +25,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(\App\Category $categoryModel)
     {
-        //
+        $categories =[0=>''] + $categoryModel->all()->lists('title','id')->toArray();
+        return view('category.create',compact('categories'));
     }
 
     /**
