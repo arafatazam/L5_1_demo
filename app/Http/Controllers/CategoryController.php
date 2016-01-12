@@ -74,9 +74,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,\App\Category $categoryModel)
     {
-        //
+        $category = $categoryModel->findOrFail($id);
+        $category->update($request->all());
+        return redirect()->route('categories.index');
     }
 
     /**
