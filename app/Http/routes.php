@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('categories', 'CategoryController');
+
+Route::get('test',function(){
+    return view('category.index');
+});
