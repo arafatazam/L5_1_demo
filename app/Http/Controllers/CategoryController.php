@@ -60,9 +60,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,\App\Category $categoryModel)
     {
-        //
+        $category = $categoryModel->findOrFail($id);
+        $categories = $categoryModel->all()->except([$id])->lists('title','id')->toArray();
+        return view('category.edit',compact('category','categories'));
     }
 
     /**
