@@ -67,7 +67,6 @@ class ProductController extends Controller
     public function show($id,\App\Product $productModel)
     {
         $product = $productModel->with('categories')->findOrFail($id)->toArray();
-        //return $product;
         return view('product.show',compact('product'));
     }
 
@@ -77,9 +76,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,\App\Product $productModel,\App\Category $categoryModel)
     {
-        //
+        $product = $productModel->with('categories')->findOrFail($id);
+        $selected_categories = $product->categories->lists('id')->toArray();
+        $categories = $categoryModel->all()->lists('title','id');
+        return view('product.edit',compact('product','categories','selected_categories'));
     }
 
     /**
@@ -89,9 +91,19 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, \App\Product $productModel)
     {
-        //
+        $product = $productModel->findOrFail($id);
+
+        if($request->get('image')){
+            $image_name = $product->photo;
+            $this->saveImage($request->get('image'),$image_name);
+        }
+
+        $product->update($request->all());
+        $product->categories()->sync($request->get('categories'));
+
+        return redirect(route('products.index'));
     }
 
     /**

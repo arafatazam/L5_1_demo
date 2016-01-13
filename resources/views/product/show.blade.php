@@ -7,6 +7,7 @@
 @section('content')
     <h1>Product Details</h1>
     <div style="margin-bottom: 2em">
+        <a class="btn btn-primary" href="{{route('products.edit',$product['id'])}}">Edit</a>
         {!! Form::open(array('route'=>array('products.destroy',$product['id']),'method' => 'delete','style'=>'display:inline')) !!}
         {!! Form::submit('Delete',array('class'=>'btn btn-danger')) !!}
         {!! Form::close() !!}

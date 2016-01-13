@@ -7,8 +7,8 @@
     {!! Form::text('model',null,array('class'=>'form-control','placeholder'=>'Product Model','required')) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('categories','Select Categories') !!}
-    {!! Form::select('categories[]', $categories, null, ['id'=>'categories','multiple','required','class'=>'form-control'] ) !!}
+    {!! Form::label('categories','Select Categories (press ctrl for multiple)') !!}
+    {!! Form::select('categories[]', $categories,$selected_categories, ['id'=>'categories','multiple','required','class'=>'form-control'] ) !!}
 </div>
 <div class="form-group">
     <style>

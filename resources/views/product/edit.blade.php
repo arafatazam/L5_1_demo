@@ -1,14 +1,14 @@
 @extends('app')
 
 @section('title')
-    Create New Product
+    Edit | {{$product->name}}
 @stop
 
 @section('content')
 
-    <h1>New Product</h1>
-    {!! Form::open(array('route' => 'products.store','id'=>'product-form'))!!}
-        @include('product.partials.form',['photoSelectionText'=>'Select a product photo','submitText'=>'Create','selected_categories'=>null])
+    <h1>Edit Product</h1>
+    {!! Form::model($product,array('route' => array('products.update',$product['id']),'id'=>'product-edit-form','method'=>'put'))!!}
+        @include('product.partials.form',['photoSelectionText'=>'Select another photo (or leave blank)','submitText'=>'Edit'])
     {!! Form::close() !!}
 @stop
 
@@ -25,24 +25,19 @@
                 $('.cropit-image-input').click();
             });
 
-            $("#product-form").submit(function(e) {
+            $("#product-edit-form").submit(function(e) {
 
                 var img_data = $('#image-cropper').cropit('export', {
                     type: 'image/jpeg',
                     quality: .5
                 });
 
-                if(!img_data){
-                    alert('Please Select A Product Image');
-                    return false;
-                }
-
                 $('.image-input').val(img_data);
 
                 return true;
 
-                /*var url = $("#product-form").attr('action');
-                var formData = $("#product-form").serialize();
+                /*var url = $("#product-edit-form").attr('action');
+                var formData = $("#product-edit-form").serialize();
 
                 $.ajax({
                     type: "POST",

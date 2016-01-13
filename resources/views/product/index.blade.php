@@ -16,6 +16,7 @@
                         <img class="img-responsive" src="{{url('product_photos/'.$product['photo'])}}" alt="{{$product['name']}}"/>
                         <h4>{{$product['name']}}</h4>
                         <div>
+                            <a class="btn btn-primary btn-sm" href="{{route('products.edit',[$product['id']])}}">Edit</a>
                             {!! Form::open(array('route'=>array('products.destroy',$product['id']),'method' => 'delete','style'=>'display:inline')) !!}
                             {!! Form::submit('Delete',array('class'=>'btn btn-danger btn-sm')) !!}
                             {!! Form::close() !!}
