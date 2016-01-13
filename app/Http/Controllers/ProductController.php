@@ -100,8 +100,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,\App\Product $productModel)
     {
-        //
+        $product = $productModel->findOrFail($id);
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }
