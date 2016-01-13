@@ -16,9 +16,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\App\Product $productModel)
     {
-        return Product::all()->toArray();
+        $products = $productModel->all()->toArray();
+        return view('product.index',compact('products'));
     }
 
     /**
