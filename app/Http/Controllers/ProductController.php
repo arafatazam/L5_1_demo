@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Image;
+use App\Product;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return Product::all()->toArray();
     }
 
     /**
@@ -36,9 +38,23 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,\App\Product $productModel)
     {
-        //
+        $image_name = $productModel->generateUniqueImageName();
+        $this->saveImage($request->get('image'),$image_name);
+
+        $newProduct = $productModel->newInstance($request->all());
+        $newProduct->photo = $image_name;
+        $newProduct->save();
+        $newProduct->categories()->sync($request->get('categories'));
+
+        return redirect(route('products.index'));
+    }
+
+    protected function saveImage($img_data,$img_name){
+        $uri = substr($img_data,strpos($img_data,",")+1);
+        $img = Image::make($uri);
+        $img->save(public_path('product_photos/'.$img_name));
     }
 
     /**
