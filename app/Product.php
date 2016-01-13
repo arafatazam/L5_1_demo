@@ -12,4 +12,13 @@ class Product extends Model
     {
         return $this->belongsToMany('App\Category');
     }
+
+    public static function generateUniqueImageName($length=40)
+    {
+        $name = strtolower(str_random($length)).'.jpg';
+        if (static::wherePhoto($name)->exists()) {
+            return static::generateUniqueImageName($length);
+        }
+        return $name;
+    }
 }
