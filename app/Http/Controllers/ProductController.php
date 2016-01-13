@@ -24,9 +24,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(\App\Category $categoryModel)
     {
-        return view('product.create');
+        $categories = $categoryModel->all()->lists('title','id');
+        return view('product.create',compact('categories'));
     }
 
     /**
@@ -37,7 +38,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //
     }
 
     /**
