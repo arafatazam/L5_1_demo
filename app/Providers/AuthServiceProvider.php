@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Category;
+use App\Policies\CategoryPolicy;
+use App\User;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\App;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +30,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         parent::registerPolicies($gate);
 
-        //
+        $gate->define('administer',function(User $user){
+            if($user->is_admin)
+            {
+                return true;
+            }
+            return false;
+        });
+
+        $gate->define('view',function(User $user){
+            return auth()->check();
+        });
     }
 }
