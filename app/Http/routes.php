@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return redirect(route('products.index'));
 });
+Route::get('home', function () {
+    return redirect(route('products.index'));
+});
 
 Route::resource('categories', 'CategoryController',['except'=>['show'] ]);
 Route::resource('products', 'ProductController');
@@ -21,3 +24,11 @@ Route::resource('products', 'ProductController');
 Route::get('test',function(){
     return view('category.index');
 });
+
+Route::get('auth/login', ['as'=>'auth.get-login','uses'=>'Auth\AuthController@getLogin']);
+Route::post('auth/login', ['as'=>'auth.login','uses'=>'Auth\AuthController@postLogin']);
+Route::get('auth/logout', ['as'=>'auth.logout','uses'=>'Auth\AuthController@getLogout']);
+
+
+Route::get('auth/register', ['as'=>'auth.get-register','uses'=>'Auth\AuthController@getRegister']);
+Route::post('auth/register', ['as'=>'auth.register','uses'=>'Auth\AuthController@postRegister']);

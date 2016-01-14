@@ -19,12 +19,12 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Session <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->check()? auth()->user()->name : 'Session' }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Sign Up</a></li>
-                        <li><a href="#">Sign In</a></li>
+                        <li><a href="{{route('auth.get-register')}}">Sign Up</a></li>
+                        <li><a href="{{route('auth.get-login')}}">Sign In</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Log out</a></li>
+                        <li><a href="{{route('auth.logout')}}">Sign out</a></li>
                     </ul>
                 </li>
             </ul>
