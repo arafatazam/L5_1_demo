@@ -62,7 +62,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,\App\Product $productModel)
+    public function store(Request $request,\App\Product $productModel,\App\Category $categoryModel)
     {
         $image_name = $productModel->generateUniqueImageName();
         $this->saveImage($request->get('image'),$image_name);
@@ -70,7 +70,9 @@ class ProductController extends Controller
         $newProduct = $productModel->newInstance($request->all());
         $newProduct->photo = $image_name;
         $newProduct->save();
-        $newProduct->categories()->sync($request->get('categories'));
+
+        $completeCategories = $categoryModel->getFullCategoryList($request->get('categories'));
+        $newProduct->categories()->sync($completeCategories);
 
         return redirect(route('products.index'));
     }
@@ -114,7 +116,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, \App\Product $productModel)
+    public function update(Request $request, $id, \App\Product $productModel,\App\Category $categoryModel)
     {
         $product = $productModel->findOrFail($id);
 
@@ -124,7 +126,8 @@ class ProductController extends Controller
         }
 
         $product->update($request->all());
-        $product->categories()->sync($request->get('categories'));
+        $completeCategories = $categoryModel->getFullCategoryList($request->get('categories'));
+        $product->categories()->sync($completeCategories);
 
         return redirect(route('products.index'));
     }
