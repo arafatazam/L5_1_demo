@@ -12,10 +12,10 @@
 */
 
 Route::get('/', function () {
-    return redirect(route('products.index'));
-});
-Route::get('home', function () {
-    return redirect(route('products.index'));
+    if(auth()->check()){
+        return redirect(route('products.index'));
+    }
+    return redirect(route('auth.login'));
 });
 
 Route::resource('categories', 'CategoryController',['except'=>['show'] ]);
