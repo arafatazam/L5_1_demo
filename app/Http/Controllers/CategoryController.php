@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Gate;
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,6 +11,12 @@ use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
+    public function __construct(){
+
+        if(Gate::denies('administer')){
+            return abort(403,'Access Denied');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
