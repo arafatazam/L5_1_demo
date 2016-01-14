@@ -10,6 +10,12 @@
     @can('administer')
     <a class="btn btn-large btn-success" href="{{route('products.create')}}">Add New</a>
     @endcan
+    <div class="pull-right">
+        {!! Form::open(array('route'=>'products.index','method' => 'get','class'=>'form-inline')) !!}
+        {!! Form::select('cat',$categories,null,['class'=>'form-control'])!!}
+        {!! Form::submit('Filter',array('class'=>'btn btn-info')) !!}
+        {!! Form::close() !!}
+    </div>
     <div class="row" style="margin-top: 2em">
         @foreach($products as $product)
             <div class="col-xs-4 col-sm-3">

@@ -31,10 +31,18 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(\App\Product $productModel)
+    public function index(\App\Product $productModel,\App\Category $categoryModel)
     {
-        $products = $productModel->all()->toArray();
-        return view('product.index',compact('products'));
+        $category_id = request('cat');
+        $categories = $categoryModel->all()->lists('title','id');
+        if($category_id){
+            $products = $productModel->whereHas('categories',function($query) use($category_id){
+                $query->where('category_id',$category_id);
+            })->get()->toArray();
+        }else{
+            $products = $productModel->all()->toArray();
+        }
+        return view('product.index',compact('products','categories'));
     }
 
     /**
