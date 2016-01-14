@@ -6,16 +6,18 @@
 
 @section('content')
 
-    <h1>Products</h1>
+    <h1>{{$categories[$category_id] or 'All Products'}}</h1>
     @can('administer')
     <a class="btn btn-large btn-success" href="{{route('products.create')}}">Add New</a>
     @endcan
     <div class="pull-right">
         {!! Form::open(array('route'=>'products.index','method' => 'get','class'=>'form-inline')) !!}
-        {!! Form::select('cat',$categories,null,['class'=>'form-control'])!!}
+        {!! Form::select('cat',$categories,$category_id,['class'=>'form-control'])!!}
         {!! Form::submit('Filter',array('class'=>'btn btn-info')) !!}
+        <a class="btn btn-default" href="{{route('products.index')}}">No Filter</a>
         {!! Form::close() !!}
     </div>
+    <div class="clearfix"></div>
     <div class="row" style="margin-top: 2em">
         @foreach($products as $product)
             <div class="col-xs-4 col-sm-3">

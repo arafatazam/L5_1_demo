@@ -36,13 +36,14 @@ class ProductController extends Controller
         $category_id = request('cat');
         $categories = $categoryModel->all()->lists('title','id');
         if($category_id){
+            $categoryModel->findOrFail($category_id);
             $products = $productModel->whereHas('categories',function($query) use($category_id){
                 $query->where('category_id',$category_id);
             })->get()->toArray();
         }else{
             $products = $productModel->all()->toArray();
         }
-        return view('product.index',compact('products','categories'));
+        return view('product.index',compact('products','categories','category_id'));
     }
 
     /**
