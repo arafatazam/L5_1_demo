@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function __construct(){
 
         if(Gate::denies('administer')){
-            return abort(403,'Access Denied');
+            abort(403,'Access Denied');
         }
     }
     /**

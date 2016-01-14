@@ -16,10 +16,13 @@ class ProductController extends Controller
         switch(request()->route()->getName()){
             case 'products.index':
             case 'products.show':
+                if(Gate::denies('view')){
+                    abort(403,'Access Denied');
+                }
                 break;
             default:
                 if(Gate::denies('administer')){
-                    return abort(403,'Access Denied');
+                    abort(403,'Access Denied');
                 }
         }
     }
