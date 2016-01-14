@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Image;
+use Gate;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,17 @@ use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
+    public function __construct(){
+        switch(request()->route()->getName()){
+            case 'products.index':
+            case 'products.show':
+                break;
+            default:
+                if(Gate::denies('administer')){
+                    return abort(403,'Access Denied');
+                }
+        }
+    }
     /**
      * Display a listing of the resource.
      *
